@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      background-color: #f4f6f9;
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .navbar {
+      background-color: #2c3e50;
+      padding: 10px 20px;
+      color: white;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 999;
+    }
+
+    .navbar-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #34495e;
+      height: 100vh;
+      position: fixed;
+      top: 56px;
+      left: 0;
+      padding-top: 20px;
+      overflow-y: auto;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background-color: #1abc9c;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      margin-top: 56px;
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+    }
+
+    .content-wrapper {
+      padding: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .card-square {
+      height: 220px;
+      border: 2px solid #3498db;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease-in-out;
+      background-color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .card-square:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    }
+
+    .card-square h5 {
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    .card-square p {
+      color: #7f8c8d;
+      font-size: 0.95rem;
+    }
+
+    .card-square a {
+      text-decoration: none;
+      color: #2980b9;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .logout-btn {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .logout-btn:hover {
+      color: #bdc3c7;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+      }
+
+      .main-content {
+        margin-left: 0;
+        margin-top: 10px;
+      }
+
+      .content-wrapper {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Top Navbar -->
+<nav class="navbar navbar-dark">
+  <div class="container-fluid d-flex justify-content-between">
+    <a class="navbar-brand" href="#">Admin Panel</a>
+    <a href="/logout" class="logout-btn"><i class="fas fa-sign-out-alt me-1"></i> Logout</a>
+  </div>
+</nav>
+
+<!-- Sidebar -->
+<div class="sidebar">
+	<a href="/clientvendor/admin"><i class="fas fa-chart-line me-2"></i> Dashboard</a>
+
+  <a href="/clientvendor/vendorlist"><i class="fas fa-users me-2"></i> Vendors</a>
+  <a href="/clientproduct/productlist"><i class="fas fa-boxes me-2"></i> Products</a>
+  <a href="/clientproduct/purchase"><i class="fas fa-plus me-2"></i> Add Product</a>
+  <a href="/clientvendor/addvendor"><i class="fas fa-user-plus me-2"></i> Add Vendor</a>
+  <a href="/client/purchase-invoices"><i class="fas fa-file-invoice me-2"></i> Invoices</a>
+  <a href="/logout"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="content-wrapper">
+    <div class="card-grid">
+      <div class="card-square">
+        <h5>Dashboard</h5>
+        <p>Overview of admin activities.</p>
+        <a href="/client/fordashboard">Go →</a>
+      </div>
+      <div class="card-square">
+        <h5>Vendors</h5>
+        <p>Manage vendors and details.</p>
+        <a href="/clientvendor/vendorlist">Go →</a>
+      </div>
+      <div class="card-square">
+        <h5>Products</h5>
+        <p>Manage product catalog.</p>
+        <a href="/clientvendor/productlist">Go →</a>
+      </div>
+      <div class="card-square">
+        <h5>Add Product</h5>
+        <p>Add a new product.</p>
+        <a href="/clientvendor/addproduct">Go →</a>
+      </div>
+      <div class="card-square">
+        <h5>Add Vendor</h5>
+        <p>Register new vendor.</p>
+        <a href="/clientvendor/addvendor">Go →</a>
+      </div>
+      <div class="card-square">
+        <h5>Invoices</h5>
+        <p>Check purchases.</p>
+        <a href="/client/purchase-invoices">Go →</a>
+      </div>		
+
+</body>
+</html>
+
+
