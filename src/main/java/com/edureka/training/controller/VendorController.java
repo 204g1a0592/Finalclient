@@ -18,6 +18,9 @@ import com.edureka.training.DTO.VendorProductDTO;
 import com.edureka.training.entity.Product;
 import com.edureka.training.entity.UserCredentail;
 import com.edureka.training.entity.Vendor;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.v3.oas.models.PathItem.HttpMethod;
 
@@ -51,6 +54,7 @@ public class VendorController {
         System.out.println("response......" + response);
 
         if (response.getBody().equalsIgnoreCase("success")) {
+        	
             return "redirect:/clientvendor/vendorlist";  // redirect to avoid resubmission
         } else {
             model.addAttribute("error", "Vendor already exists");
@@ -60,12 +64,18 @@ public class VendorController {
 
     // Show vendor list
     @GetMapping("/vendorlist")
-    public String displayvendors(Model model) {
+    public String displayvendors(Model model) throws JsonMappingException, JsonProcessingException {
         String apiUrl = "http://localhost:8091/apivendor/displayvendor";
         RestTemplate restTemplate = new RestTemplate();
-
-        Vendor[] vendorsArray = restTemplate.getForObject(apiUrl, Vendor[].class);
-        List<Vendor> vendorsList = Arrays.asList(vendorsArray);
+        //added now
+        String vendorResponse = restTemplate.getForObject("http://localhost:8091/apivendor/displayvendor", String.class);
+        System.out.println("Vendor JSON: " + vendorResponse);
+//commenter noew
+//        Vendor[] vendorsArray = restTemplate.getForObject(apiUrl, Vendor[].class);
+//        List<Vendor> vendorsList = Arrays.asList(vendorsArray);
+        ObjectMapper mapper = new ObjectMapper();
+        Vendor[] vendors = mapper.readValue(vendorResponse, Vendor[].class);
+        List<Vendor> vendorsList = Arrays.asList(vendors);
         if(vendorsList.size()==0) {
         	model.addAttribute("error", "No Vendor are availble");
         }

@@ -55,7 +55,7 @@ public class PurchaseInvoice {
 		public void setQuantity(int quantity) {
 			this.quantity = quantity;
 		}
-
+		private double price;
 		public double getPrice() {
 			return price;
 		}
@@ -80,7 +80,7 @@ public class PurchaseInvoice {
 			this.date = date;
 		}
 
-		private double price;
+		
 
 	    private double totalCost;
 

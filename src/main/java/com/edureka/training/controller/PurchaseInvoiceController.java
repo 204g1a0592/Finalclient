@@ -17,7 +17,7 @@ import com.edureka.training.entity.PurchaseInvoice;
 import com.edureka.training.entity.Vendor;
 
 @Controller
-//@RequestMapping("/clientpurchaseinvoice")
+@RequestMapping("/clientpurchaseinvoice")
 //public class PurchaseInvoiceController {
 //
 //    @GetMapping("purchase-invoices")
@@ -35,32 +35,52 @@ import com.edureka.training.entity.Vendor;
 //}
 
 public class PurchaseInvoiceController {
-	@GetMapping("/client/purchase-invoices")
-public String showInvoices(
-    @RequestParam(required = false) String search, 
-    Model model) {
-    
-    RestTemplate restTemplate = new RestTemplate();
-    String baseApiUrl = "http://localhost:8091/apiinvoice"; // example API base
+	
+	//added today
+//	@PostMapping("addinvoice")
+//	public String saveProduct(@RequestBody Vendor vendor,
+//	                          @RequestParam("price") Double price,
+//	                          @RequestParam("quantity") Integer quantity,
+//	                          Model model) {
+//
+//	    // Prepare Product
+//	  //  Product product = new Product();
+//		PurchaseInvoice invoice=new PurchaseInvoice();
+//	    invoice.setVendor(vendor);
+//	    invoice.setPrice(price);
+//	    invoice.setQuantity(quantity);
+//	   
+//	    //System.out.println("product diplay  "+ product.getPrice()+"  "+product.getQuantity());
+//	    String apiUrl = "http://localhost:8091/apipurchaseinvoice/addinvoice";
+//	    RestTemplate restTemplate = new RestTemplate();
+//
+//	    ResponseEntity<String> response = restTemplate.postForEntity(apiUrl, invoice, String.class);
+//
+//	    // Always reload vendor list after response
+//	    String vendorApiUrl = "http://localhost:8091/apivendor/displayvendor";
+//	    Vendor[] vendorsArray = restTemplate.getForObject(vendorApiUrl, Vendor[].class);
+//	    List<Vendor> vendorsList = Arrays.asList(vendorsArray);
+//	    model.addAttribute("vendors", vendorsList);
+//	    //new content added here today
+//	    String inapi="http://localhost:8091/apipurchaseinvoice/addinvoice";
+//	    PurchaseInvoice[] invoices=restTemplate.getForObject(inapi, PurchaseInvoice[].class);
+//	    
+//	    
+//	    if ("success".equalsIgnoreCase(response.getBody())) {
+//	        model.addAttribute("mess", "Product purchased successfully");
+//	    } else {
+//	        model.addAttribute("mess", "Purchase failed");
+//	    }
+//
+//	    return "addProduct";  // vendors list now always available
+//	}
+	 @GetMapping("/viewinvoices")
+	    public String viewInvoices(Model model) {
+	        String apiUrl = "http://localhost:8091/apiipurchasenvoice/all";
+	        RestTemplate restTemplate = new RestTemplate();
+	        PurchaseInvoice[] invoices = restTemplate.getForObject(apiUrl, PurchaseInvoice[].class);
+	        model.addAttribute("invoices", Arrays.asList(invoices));
+	        return "purchase_invoice"; // maps to viewInvoices.html
+	    }
 
-    List<PurchaseInvoice> invoices;
-
-    if (search != null && !search.isEmpty()) {
-        // Call your search API with query param ?search=...
-        String searchApiUrl = baseApiUrl + "/search?query=" + search;
-        PurchaseInvoice[] responseArray = restTemplate.getForObject(searchApiUrl, PurchaseInvoice[].class);
-        invoices = responseArray != null ? Arrays.asList(responseArray) : new ArrayList<>();
-    } else {
-        // Get last 5 invoices API endpoint
-        String last5ApiUrl = baseApiUrl + "/last5";
-        PurchaseInvoice[] responseArray = restTemplate.getForObject(last5ApiUrl, PurchaseInvoice[].class);
-        invoices = responseArray != null ? Arrays.asList(responseArray) : new ArrayList<>();
-    }
-
-    model.addAttribute("invoices", invoices);
-    model.addAttribute("purchaseInvoice", new PurchaseInvoice());
-    model.addAttribute("search", search);
-
-    return "purchase_invoice";
-}
 }
